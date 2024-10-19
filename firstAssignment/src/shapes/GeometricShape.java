@@ -1,5 +1,4 @@
 package shapes;
-
 public abstract class GeometricShape implements Comparable <GeometricShape> {
 	double height;
 	double radius;
@@ -27,7 +26,9 @@ public abstract class GeometricShape implements Comparable <GeometricShape> {
 	public int compareTo(GeometricShape other) {
 	    return Double.compare(this.height, other.height);
 	    }
-		
-	}
+
+}
+
+	
 
 

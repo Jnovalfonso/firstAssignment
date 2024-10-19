@@ -4,20 +4,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import shapes.*;
+import utilities.SortManager;
 
 public class AppDriver
 {	
 	public static void main( String[] args )
 	{
-		//File shapesFile = new File("firstAssignment/res/shapes1.txt");
-		//System.out.println(shapesFile.getAbsolutePath());
-		
-		File shapesFile = parseArgs(args);
+		ParseArgs.parseArgs(args);
 
-		if (shapesFile == null) 
-		{
-			return;
-		}
+		File shapesFile = ParseArgs.getFile();
+		char sortType = ParseArgs.getSortType();
+		char algorithm = ParseArgs.getAlgorithm();
+
+		System.out.println("File: " + shapesFile);
+		System.out.println("Sort type: " + sortType);
+		System.out.println("Algorithm: " + algorithm);
+
+		if (shapesFile == null) {return;}
 
 		Scanner input = null;
 		int arrayLength = 0;
@@ -44,8 +47,6 @@ public class AppDriver
 			String shapeType = input.next();
 			Double height = Double.parseDouble(input.next());
 			Double side = Double.parseDouble(input.next());
-
-			System.out.println(shapeType + " " + height + " "+ side);
 
 			switch (shapeType) {
 				case "Cone":
@@ -77,38 +78,34 @@ public class AppDriver
 			index += 1;
 		}
 
+		long startTime = System.nanoTime();
+        GeometricShape[] sortedShapes = SortManager.SortArray(shapeArray, sortType, algorithm);
+		long endTime = System.nanoTime();
+		long duration = (endTime - startTime) / 1000000;
 
-		// refer to demo02 Student.java for comparable implementation, and
-		// NameCompare.java or GradeCompare for comparator implementations
+		System.out.println("The first sorted shape: " + sortedShapes[0] + " | Type: " + sortedShapes[0].getClass().getSimpleName() + " | Value: " + sortTypeCalculation(sortedShapes[0], sortType));
 
-		// refer to demo02 KittySort.java on how to use a custom sorting
-		// algorithm on a list of comparables to sort using either the
-		// natural order (comparable) or other orders (comparators)
-	
-	}
+		for (int i = 0; i < sortedShapes.length; i++) {
+			if (sortedShapes.length > 1000 && i % 1000 == 0) {
+				System.out.println((i + 1) + "-th: " + sortedShapes[i] + " | Type: " + sortedShapes[i].getClass().getSimpleName() + " | Value: " + sortTypeCalculation(sortedShapes[i], sortType));
+			}
+		}
 
-	private static File parseArgs(String[] args) 
+		System.out.println("The last sorted shape: " + sortedShapes[sortedShapes.length - 1] + " | Type: " + sortedShapes[sortedShapes.length - 1].getClass().getSimpleName() + " | Value: " + sortTypeCalculation(sortedShapes[sortedShapes.length - 1], sortType));
+		System.out.println("Duration: " + duration + " milliseconds");
+	} 
+
+	private static double sortTypeCalculation (GeometricShape shape, char sortType)
 	{
-		if (args.length > 0) {
-            String filename = args[0];
-            File file = new File(filename);
-
-            if (file.exists() && file.isFile()) 
-			{
-                System.out.println("File is valid: " + filename);
-				return file;
-            } 
-			else 
-			{
-                System.out.println("The specified file does not exist or is not a valid file: " + filename);
-				return null;
-            }
-        } 
-		else 
-		{
-            System.out.println("Please provide the filename as a command-line argument.");
-			return null;
+		switch (sortType) {
+            case 'v':
+                return shape.getCalcVolume();
+            case 'h':
+				return shape.getHeight();
+            case 'a':
+                return shape.getBaseArea();
+            default:
+                throw new IllegalArgumentException("Invalid sort option: " + sortType);
         }
 	}
- 
 }

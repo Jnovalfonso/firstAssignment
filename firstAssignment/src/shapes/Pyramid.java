@@ -15,10 +15,10 @@ public class Pyramid extends GeometricShape
 	}
 
 	public double getCalcVolume() {
-		return (1/3) * getBaseArea() * height;
+		return (1.0 / 3.0) * getBaseArea() * height;
 	}
 
 	public double getBaseArea() {
-		return Math.pow(side, 2); 
+		return  Math.pow(side, 2);
 	}
 }

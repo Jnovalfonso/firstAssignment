@@ -1,5 +1,6 @@
 package shapes;
 import java.util.Comparator;
+
 public class ComparatorBase implements Comparator<GeometricShape> {
 	
 @Override

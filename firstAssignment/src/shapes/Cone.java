@@ -15,13 +15,12 @@ public class Cone extends GeometricShape
 	}
 	
 	public double getCalcVolume() {
-		  return (1/3) * getBaseArea() * height;
+		return  (1.0 / 3.0) * getBaseArea() * height;
 
 	}
 	
 	public double getBaseArea() {
 		return  Math.PI * Math.pow(radius, 2);
 	}
-
 	
 }

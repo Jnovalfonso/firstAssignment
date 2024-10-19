@@ -26,7 +26,7 @@
 4. **Run the Program:**
    - Execute the following command in the terminal:
      ```bash
-     java -jar Sort.jar -t <type> -s <sorting_algorithm> -f <file_name>
+     java -jar Sort.jar -t<type> -s<sorting_algorithm> -f<file_name>
      ```
      Replace the placeholders with valid inputs:
      - **`<type>`**:  
@@ -42,7 +42,7 @@
        - `z` (Custom Sort)
      - **`<file_name>`**:  
        - The file must be in the following format:  
-         `res/<filename>.txt`
+         `"res/<filename>".txt`
          
 ## Example Command
 
